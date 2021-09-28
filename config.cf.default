@@ -1,0 +1,80 @@
+[DB]
+# Connector: mysql or sqlite3
+DB_CONNECTOR = sqlite3
+# DB name: MINECO_prueba or MINECO_project or MINECO_lemas
+DB_NAME = MINECO_prueba
+
+# This is for mysql only
+DB_SERVER = XXXXXXX.tsc.uc3m.es
+DB_USER = XXXXXXXXXXXXXX
+DB_PASSWORD = XXXXXXXX
+
+[CATEGORIES]
+# List of categories. Every pair of categories A and B must satisfy 
+# A in B, B in A, or intersection(A, B) = emptyset
+categories: ['CNat_', 'Mat',  'Comp', 'Fis', 'Quim', 'Tierra', 'Bio', 'OtherCN',
+             'IngTex_', 'ICivil', 'IEE_Inf', 'IMec', 'IQuim', 'IMater', 'IMed', 
+                        'IAmb', 'BioTecAmb', 'BioTecInd', 'NanoTec', 'OtherIT',
+             'MedCS_', 'MBasica', 'MClinic', 'CSalud', 'BioTecSalud',
+                       'OtherMedCS',
+             'AgricVet_', 'AgSilvPesc', 'CAnimLecher', 'Veterin', 'BioTecAgr',
+                          'OtherAgVet',
+             'CSoc_', 'Psico', 'EconNeg', 'CEduc', 'Sociolog', 'Derecho',
+                      'Polit', 'GeogrSocEcon', 'PeriodCom', 'OtherCSoc',
+             'HumanArt_', 'HistorArqu', 'IdiomLiterat', 'FilosEticRelig',
+                          'Arte', 'OtherHArt',
+             'Other_']
+# Category model: multiclass, multilabel or weighted
+cat_model: multilabel
+
+# Dictionary of dependencies between categories
+# {A:B, C:D, E:D } means that A is a subclass of B and C and E are 
+# subclasses of D
+parentcat: {'Mat': 'CNat_', 'Comp': 'CNat_', 'Fis': 'CNat_', 'Quim': 'CNat_', 
+            'Tierra': 'CNat_', 'Bio': 'CNat_', 'OtherCN': 'CNat_',
+            'ICivil': 'IngTex_', 'IEE_Inf': 'IngTex_', 'IMec': 'IngTex_',
+            'IQuim': 'IngTex_', 'IMater': 'IngTex_', 'IMed': 'IngTex_', 
+            'IAmb': 'IngTex_', 'BioTecAmb': 'IngTex_', 'BioTecInd': 'IngTex_',
+            'NanoTec': 'IngTex_', 'OtherIT': 'IngTex_',
+            'MBasica': 'MedCS_', 'MClinic': 'MedCS_', 'CSalud': 'MedCS_',
+            'BioTecSalud': 'MedCS_', 'OtherMedCS': 'MedCS_',
+            'AgSilvPesc': 'AgricVet_', 'CAnimLecher': 'AgricVet_',
+            'Veterin': 'AgricVet_', 'BioTecAgr': 'AgricVet_',
+            'OtherAgVet': 'AgricVet_',
+            'Psico': 'CSoc_', 'EconNeg': 'CSoc_', 'CEduc': 'CSoc_',
+            'Sociolog': 'CSoc_', 'Derecho': 'CSoc_', 'Polit': 'CSoc_',
+            'GeogrSocEcon': 'CSoc_', 'PeriodCom': 'CSoc_', 'OtherCSoc': 'CSoc_',
+            'HistorArqu': 'HumanArt_', 'IdiomLiterat': 'HumanArt_',
+            'FilosEticRelig': 'HumanArt_', 'Arte': 'HumanArt_',
+            'OtherHArt': 'HumanArt_'
+           }
+
+[PREPROC]
+# languages for the language detection library (ISO 639-1)
+languages = es,en
+
+# Lematizador
+# La primera linea permite escoger entre "nltk" y "hunspell"
+# si escogemos hunspell hay que proporcionar un diccionario valido
+lemmatizer_tool = nltk
+hunspelldic = ./fordclassifier/corpusanalyzer/lemafiles/hunspelldic
+
+# Diccionario para reponer tildes. Cada linea es una entrada en formato camion:camion
+tilde_dictio = ./fordclassifier/corpusanalyzer/lemafiles/tilde_dictio.txt
+
+# Stopwords
+stw_file =./fordclassifier/corpusanalyzer/lemafiles/stopwords/MINECO_stopwords.txt
+
+# Ngram file for the lemmatizer
+# ngram_file = ./fordclassifier/corpusanalyzer/lemafiles/ngrams.txt
+ngram_file = 
+
+# Fichero con un diccionario de equivalencias
+dict_eq_file = ./fordclassifier/corpusanalyzer/lemafiles/diccionario_equivalencias.txt
+
+# Minimum document frequency
+min_df = 2
+
+# Title multiplier. The title words are replicated title_mul times, so as to
+# give the title more influence on the document parameterization
+title_mul = 1

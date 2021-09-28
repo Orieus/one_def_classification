@@ -1,0 +1,133 @@
+[DataPaths]
+
+# Data source (options: file, mongodb, sql)
+source_type: sql
+
+# Data destination (options: file, mongodb)
+dest_type: file
+
+# DB settings
+db_name: MINECO_prueba
+
+# Mongo DB settings
+# db_hostname: XXXXX
+# db_pwd: XXXXXXX
+# db_port: XXXXXX
+# db_label_coll_name: labelData
+# db_history_coll_name: labelHistory
+
+# SQL DB settings
+# db_connector can be mysql or sqlite3
+db_connector: sqlite3
+
+# This is only for mysql, not required for sqlite3
+db_user: XXXXXXXXXXXXXX
+db_server: XXXXX.tsc.uc3m.es
+db_password: XXXXXXXXXXX
+
+db_label_values_tablename: labels_label
+db_label_info_tablename: labels_info
+db_preds_tablename: predictions
+db_history_tablename: labelhistory
+# Name of the columns in sql databases that contain the item reference
+db_ref_name = Referencia
+
+# DB writing mode: rewrite or update
+db_mode: update
+
+# Transfer mode to/from file or db: rewrite or update
+# db_file2db_mode: rewrite
+# db_db2file_mode: update
+
+# Labelling subfolders
+input_folder: input
+output_folder: output
+used_folder: used
+
+# Filenames (only names, not extensions)
+dataset_fname: ../MINECO_project
+labelhistory_fname: labelhistory
+labels_endname: _labels
+preds_endname: _predict
+urls_fname: urls
+export_labels_fname: exported_labels
+
+[Labeler]
+# Transfer type: this variable states the way to incorporate new data
+#    project (no new urls are accepted from the input folder)
+#    expand  (new urls are accepted)
+#    contract (only urls in the input folder are preserved in the data structure)
+transfer_mode: project
+
+# Type of wid: if 'yes', the wid is computed as a transformation of the url.
+#              if 'no', the wid is taken equal to the url.
+#              if 'www', the wid is the result of removing www. from the url
+compute_wid: www
+
+# Type of data: if 'url': the data is a url shown in a browser
+#               if 'txt': the data is printed.
+datatype: txt
+
+# Type of taxonomy: single (mutually exclusive classes), multi (multilabel)
+cat_model: multi
+
+# List of categories. Every pair of categories A and B must satisfy 
+# A in B, B in A, or intersection(A, B) = emptyset
+categories: ['CNat_', 'Mat',  'Comp', 'Fis', 'Quim', 'Tierra', 'Bio', 'OtherCN',
+             'IngTex_', 'ICivil', 'IEE_Inf', 'IMec', 'IQuim', 'IMater', 'IMed', 
+                        'IAmb', 'BioTecAmb', 'BioTecInd', 'NanoTec', 'OtherIT',
+             'MedCS_', 'MBasica', 'MClinic', 'CSalud', 'BioTecSalud',
+                       'OtherMedCS',
+             'AgricVet_', 'AgSilvPesc', 'CAnimLecher', 'Veterin', 'BioTecAgr',
+                          'OtherAgVet',
+             'CSoc_', 'Psico', 'EconNeg', 'CEduc', 'Sociolog', 'Derecho',
+                      'Polit', 'GeogrSocEcon', 'PeriodCom', 'OtherCSoc',
+             'HumanArt_', 'HistorArqu', 'IdiomLiterat', 'FilosEticRelig',
+                          'Arte', 'OtherHArt',
+             'Other_']
+
+# Dictionary of dependencies between categories
+# {A:B, C:D, E:D } means that A is a subclass of B and C and E are 
+# subclasses of D
+parentcat: {'Mat': 'CNat_', 'Comp': 'CNat_', 'Fis': 'CNat_', 'Quim': 'CNat_', 
+            'Tierra': 'CNat_', 'Bio': 'CNat_', 'OtherCN': 'CNat_',
+            'ICivil': 'IngTex_', 'IEE_Inf': 'IngTex_', 'IMec': 'IngTex_',
+            'IQuim': 'IngTex_', 'IMater': 'IngTex_', 'IMed': 'IngTex_', 
+            'IAmb': 'IngTex_', 'BioTecAmb': 'IngTex_', 'BioTecInd': 'IngTex_',
+            'NanoTec': 'IngTex_', 'OtherIT': 'IngTex_',
+            'MBasica': 'MedCS_', 'MClinic': 'MedCS_', 'CSalud': 'MedCS_',
+            'BioTecSalud': 'MedCS_', 'OtherMedCS': 'MedCS_',
+            'AgSilvPesc': 'AgricVet_', 'CAnimLecher': 'AgricVet_',
+            'Veterin': 'AgricVet_', 'BioTecAgr': 'AgricVet_',
+            'OtherAgVet': 'AgricVet_',
+            'Psico': 'CSoc_', 'EconNeg': 'CSoc_', 'CEduc': 'CSoc_',
+            'Sociolog': 'CSoc_', 'Derecho': 'CSoc_', 'Polit': 'CSoc_',
+            'GeogrSocEcon': 'CSoc_', 'PeriodCom': 'CSoc_', 'OtherCSoc': 'CSoc_',
+            'HistorArqu': 'HumanArt_', 'IdiomLiterat': 'HumanArt_',
+            'FilosEticRelig': 'HumanArt_', 'Arte': 'HumanArt_',
+            'OtherHArt': 'HumanArt_'
+           }
+
+# If the categories are complete (i.e. they fill the observation space) then set
+# fill_with_Other to no. Otherwise, set fill_with_Other to yes, and a category
+# 'Other' will be added to the category set
+fill_with_Other: no
+
+# List of labels
+yes_label: 1
+no_label: -1
+unknown_label = 0
+error_label = -99
+
+# Default value for predictions
+unknown_pred = 0
+
+# Set the following to True if a user identifier will be requested on order 
+# to track different labelers.
+track_user: yes
+
+[ActiveLearning]
+# In multiclass cases, the reference class is the class used by the active
+# learning algorithm to compute the sample scores.
+ref_class: CNat_
+

@@ -1,0 +1,9 @@
+aminoacidos : aminoacido
+celula : celular
+desarrollo : desarrollar
+red_social : redes_sociales
+dna : adn
+computacional : computacion
+linguistica : linguistico
+linguisticos : linguistica
+sayo : ensayo
